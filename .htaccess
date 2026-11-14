@@ -1,0 +1,29 @@
+Options -Indexes
+DirectoryIndex index.html
+RewriteEngine On
+
+# Apache pasa a PHP el esquema y el host reales. La API también acepta
+# X-Forwarded-* si Ricetta está detrás de otro proxy.
+RequestHeader set X-Forwarded-Proto "expr=%{REQUEST_SCHEME}"
+RequestHeader set X-Forwarded-Host "expr=%{HTTP_HOST}"
+RequestHeader set X-Forwarded-For "expr=%{REMOTE_ADDR}"
+
+# Todas las rutas /api/* las atiende un único controlador PHP.
+RewriteRule ^api(?:/(.*))?$ api.php [QSA,L]
+
+# Nunca servir archivos internos, código de configuración, esquemas ni copias.
+RewriteRule ^(?:config\.php|router\.php|schema\.sql)$ - [R=404,L,NC]
+RewriteRule ^.*\.(?:sql|sqlite3?|db|log|bak|swp)$ - [R=404,L,NC]
+
+# Tampoco archivos ocultos, documentación ni secretos.
+RewriteRule ^\.(?:git|env|ht) - [R=404,L,NC]
+RewriteRule ^(?:README\.md|LICENSE|VERSION|.*\.md|.*\.example)$ - [R=404,L,NC]
+
+Header always set Referrer-Policy "no-referrer"
+Header always set X-Frame-Options "DENY"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Permitted-Cross-Domain-Policies "none"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+# setifempty permite que api.php mantenga su CSP más restrictiva.
+Header always setifempty Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'none'; manifest-src 'self'"
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS

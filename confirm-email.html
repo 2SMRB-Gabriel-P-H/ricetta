@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Confirmar correo · Ricetta</title>
+  <link rel="stylesheet" href="styles.css?v=20261114-dist">
+</head>
+<body class="email-confirmation-page">
+  <main class="email-confirmation">
+    <h1>Confirmar correo</h1>
+    <p id="confirm-email-message">Comprueba el enlace para verificar tu dirección.</p>
+    <form id="confirm-email-form" action="api/confirm-email" method="post" hidden>
+      <input id="confirm-email-token" type="hidden" name="token">
+      <button class="primary-button" type="submit">Confirmar correo</button>
+    </form>
+    <p><a href="./">Volver a Ricetta</a></p>
+  </main>
+  <script src="confirm-email.js"></script>
+</body>
+</html>
