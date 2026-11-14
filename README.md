@@ -89,4 +89,8 @@ mariadb -u root -p < schema.sql
 
 ## Licencia
 
-Distribuido bajo licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto es de código abierto y se distribuye bajo la **Licencia MIT**. En resumen:
+- **Libre para todos**: Puedes usarlo, modificarlo, compartirlo o adaptarlo libremente para uso personal o comercial.
+- **Sin garantías**: El software se comparte tal cual, sin responsabilidades sobre fallos o pérdida de datos.
+
+Puedes consultar el texto legal completo en el archivo [LICENSE](LICENSE).
